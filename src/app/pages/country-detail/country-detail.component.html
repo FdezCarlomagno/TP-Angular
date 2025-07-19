@@ -1,0 +1,123 @@
+<div class="animate-fade-in">
+  <!-- Estado de carga -->
+  @if (loading) {
+    <div class="flex justify-center items-center py-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+    </div>
+  }
+
+  <!-- Estado de error -->
+  @if (error) {
+    <div class="text-center py-12">
+      <div class="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+        <h3 class="text-red-800 font-medium mb-2">Error al cargar el país</h3>
+        <p class="text-red-600 text-sm">{{ error }}</p>
+        <div class="mt-4 space-x-4">
+          <button 
+            (click)="loadCountryData()" 
+            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+            Reintentar
+          </button>
+          <a 
+            routerLink="/countries" 
+            class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+            Volver a Países
+          </a>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Detalles del país -->
+  @if (countryInfo && !loading && !error) {
+    <div class="space-y-8">
+      <!-- Navegación atrás -->
+      <div class="flex items-center space-x-4 mb-6">
+        <a 
+          routerLink="/countries" 
+          class="flex items-center text-primary-600 hover:text-primary-700 transition-colors">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Volver a Países
+        </a>
+      </div>
+
+      <!-- Encabezado país con bandera -->
+      <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+          <!-- Bandera -->
+          @if (countryInfo.flag?.data?.flag) {
+            <div class="flex-shrink-0">
+              <img 
+                [src]="countryInfo.flag!.data!.flag" 
+                [alt]="countryInfo.commonName + ' bandera'"
+                class="w-24 h-16 object-cover rounded-lg shadow-md border border-gray-200">
+            </div>
+          }
+          
+          <!-- Título del país e info básica -->
+          <div class="flex-1">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">{{ countryInfo.commonName }}</h1>
+            @if (countryInfo.officialName !== countryInfo.commonName) {
+              <p class="text-xl text-gray-600 mb-2">{{ countryInfo.officialName }}</p>
+            }
+            <div class="flex flex-wrap gap-4 text-sm text-gray-500">
+              <span class="bg-gray-100 px-3 py-1 rounded-full">{{ countryInfo.countryCode }}</span>
+              <span class="bg-gray-100 px-3 py-1 rounded-full">{{ countryInfo.region }}</span>
+            </div>
+          </div>
+
+          <!-- Botón Favorito -->
+          <div class="flex-shrink-0">
+            <button 
+              (click)="toggleFavorite()"
+              [class]="isFavorite ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'"
+              class="flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              {{ isFavorite ? 'Quitar de Favoritos' : 'Agregar a Favoritos' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Componente de tarjetas de información del país -->
+      <app-country-info-card 
+        [countryInfo]="countryInfo"
+        class="block">
+      </app-country-info-card>
+
+      <!-- Componente gráfico de población -->
+      @if (countryInfo.population?.data?.populationCounts) {
+        <div class="bg-white rounded-xl shadow-lg p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Historial de Población</h2>
+          <app-population-chart 
+            [populationData]="countryInfo.population!.data!.populationCounts!"
+            [countryName]="countryInfo.commonName">
+          </app-population-chart>
+        </div>
+      }
+
+      <!-- Países fronterizos -->
+      @if (countryInfo.borders && countryInfo.borders.length > 0) {
+        <div class="bg-white rounded-xl shadow-lg p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Países Fronterizos</h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @for (border of countryInfo.borders; track border.countryCode) {
+              <a 
+                [routerLink]="['/country', border.countryCode]"
+                class="block p-4 bg-gray-50 hover:bg-primary-50 rounded-lg transition-all duration-200 hover:shadow-md transform hover:scale-105">
+                <div class="text-center">
+                  <div class="text-sm font-medium text-gray-900">{{ border.name }}</div>
+                  <div class="text-xs text-gray-500 mt-1">{{ border.countryCode }}</div>
+                </div>
+              </a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,70 @@
+<div class="animate-fade-in">
+      <!-- Encabezado de página -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Explora Países</h1>
+        <p class="text-gray-600">Descubre información detallada sobre países del mundo</p>
+      </div>
+
+      <!-- Componente de Búsqueda con comunicación Input/Output -->
+      <app-search-bar 
+        [placeholder]="'Buscar un país...'"
+        (searchChange)="onSearchChange($event)"
+        class="mb-8 block">
+      </app-search-bar>
+
+      <!-- Estado de Carga -->
+      @if (loading) {
+        <div class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+        </div>
+      }
+
+      <!-- Estado de Error -->
+      @if (error) {
+        <div class="text-center py-12">
+          <div class="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+            <h3 class="text-red-800 font-medium mb-2">Error al Cargar Países</h3>
+            <p class="text-red-600 text-sm">{{ error }}</p>
+            <button 
+              (click)="loadCountries()" 
+              class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+              Intentar Nuevamente
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- Grid de Países con directiva @for -->
+      @if (!loading && !error) {
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          @for (country of filteredCountries; track country.countryCode) {
+            <app-country-card 
+              [country]="country"
+              [isFavorite]="favoritesService.isFavorite(country.countryCode)"
+              (favoriteToggle)="onFavoriteToggle($event)"
+              class="animate-slide-up">
+            </app-country-card>
+          } @empty {
+            <!-- Estado vacío cuando no hay coincidencias -->
+            <div class="col-span-full text-center py-12">
+              <div class="bg-gray-50 rounded-lg p-8 max-w-md mx-auto">
+                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <h3 class="text-gray-900 font-medium mb-2">No se encontraron países</h3>
+                <p class="text-gray-500 text-sm">Intenta ajustar tu término de búsqueda</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Resumen de resultados -->
+      @if (!loading && !error && filteredCountries.length > 0) {
+        <div class="mt-8 text-center">
+          <p class="text-gray-600">
+            Mostrando {{ filteredCountries.length }} de {{ countries.length }} países
+          </p>
+        </div>
+      }
+    </div>

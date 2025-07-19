@@ -1,0 +1,86 @@
+<div class="w-full">
+  <!-- Título del gráfico y controles -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+    <div>
+      <h3 class="text-lg font-semibold text-gray-900">Tendencias de Población</h3>
+      <p class="text-sm text-gray-600">Datos históricos de población para {{ countryName }}</p>
+    </div>
+    
+    <!-- Controles del gráfico -->
+    <div class="flex space-x-2">
+      <button 
+        (click)="toggleChartType()"
+        class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
+        {{ chartType === 'line' ? 'Gráfico de barras' : 'Gráfico de líneas' }}
+      </button>
+      <button 
+        (click)="toggleDataView()"
+        class="px-3 py-1 text-sm bg-primary-100 hover:bg-primary-200 text-primary-700 rounded-lg transition-colors">
+        {{ showAllData ? 'Últimos 10 años' : 'Todos los años' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenedor del gráfico -->
+  <div class="relative bg-white rounded-lg p-4 border border-gray-200">
+    <!-- Estado de carga -->
+    @if (loading) {
+      <div class="flex justify-center items-center h-64">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500"></div>
+      </div>
+    }
+
+    <!-- Lienzo del gráfico -->
+    @if (!loading) {
+      <div class="relative h-64 sm:h-80 lg:h-96">
+        <canvas 
+          #chartCanvas 
+          class="w-full h-full">
+        </canvas>
+      </div>
+    }
+
+    <!-- Estadísticas del gráfico -->
+    @if (!loading && populationStats) {
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-100">
+        <div class="text-center">
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Primer año</p>
+          <p class="text-sm font-medium text-gray-900">{{ populationStats.earliest.year }}</p>
+          <p class="text-xs text-gray-600">{{ formatPopulation(populationStats.earliest.value) }}</p>
+        </div>
+        <div class="text-center">
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Último año</p>
+          <p class="text-sm font-medium text-gray-900">{{ populationStats.latest.year }}</p>
+          <p class="text-xs text-gray-600">{{ formatPopulation(populationStats.latest.value) }}</p>
+        </div>
+        <div class="text-center">
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Pico</p>
+          <p class="text-sm font-medium text-gray-900">{{ populationStats.peak.year }}</p>
+          <p class="text-xs text-gray-600">{{ formatPopulation(populationStats.peak.value) }}</p>
+        </div>
+        <div class="text-center">
+          <p class="text-xs text-gray-500 uppercase tracking-wide">Crecimiento</p>
+          <p class="text-sm font-medium" [class]="populationStats.growth >= 0 ? 'text-green-600' : 'text-red-600'">
+            {{ populationStats.growth >= 0 ? '+' : '' }}{{ populationStats.growth.toFixed(1) }}%
+          </p>
+          <p class="text-xs text-gray-600">Total</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Información clave -->
+  @if (!loading && insights.length > 0) {
+    <div class="mt-4 bg-blue-50 rounded-lg p-4">
+      <h4 class="text-sm font-medium text-blue-900 mb-2">Observaciones clave</h4>
+      <ul class="space-y-1">
+        @for (insight of insights; track insight) {
+          <li class="text-sm text-blue-800 flex items-start">
+            <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+            {{ insight }}
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</div>

@@ -1,0 +1,37 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Encabezado de Navegación -->
+  <nav class="bg-white shadow-lg border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <h1 class="text-2xl font-bold text-primary-600">🌍 Explorador de Países</h1>
+          </div>
+        </div>
+        
+        <!-- Enlaces de Navegación -->
+        <div class="flex items-center space-x-8">
+          <a 
+            routerLink="/countries" 
+            routerLinkActive="text-primary-600 border-b-2 border-primary-600"
+            class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-all duration-200"
+          >
+            Países
+          </a>
+          <a 
+            routerLink="/favorites" 
+            routerLinkActive="text-primary-600 border-b-2 border-primary-600"
+            class="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-all duration-200"
+          >
+            Favoritos
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>

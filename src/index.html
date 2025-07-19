@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <title>Countries Explorer - Explora Países del Mundo</title>
+    <meta name="description" content="Descubre información completa sobre países de todo el mundo: población, capitales, monedas, banderas y datos históricos. Explora y guarda tus países favoritos." />
+    <meta name="keywords" content="países, geografía, población, capitales, monedas, banderas, datos demográficos, estadísticas mundiales, atlas digital" />
+    <meta name="author" content="Countries Explorer App" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Spanish" />
+
+    <meta property="og:title" content="Countries Explorer - Explora Países del Mundo" />
+    <meta property="og:description" content="Descubre información completa sobre países de todo el mundo con gráficos interactivos y datos actualizados." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://countries-explorer.app" />
+    <meta property="og:image" content="https://countries-explorer.app/assets/og-image.jpg" />
+    <meta property="og:image:alt" content="Countries Explorer - Aplicación web para explorar países" />
+    <meta property="og:site_name" content="Countries Explorer" />
+    <meta property="og:locale" content="es_ES" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Countries Explorer - Explora Países del Mundo" />
+    <meta name="twitter:description" content="Descubre información completa sobre países de todo el mundo con gráficos interactivos y datos actualizados." />
+    <meta name="twitter:image" content="https://countries-explorer.app/assets/twitter-card.jpg" />
+    <meta name="twitter:image:alt" content="Countries Explorer - Aplicación web para explorar países" />
+    
+    <link rel="canonical" href="https://countries-explorer.app" />
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#3b82f6" />
+    
+    <link rel="preconnect" href="https://date.nager.at" />
+    <link rel="preconnect" href="https://countriesnow.space" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+    <link rel="dns-prefetch" href="//date.nager.at" />
+    <link rel="dns-prefetch" href="//countriesnow.space" />
+    <link rel="dns-prefetch" href="//6864719c5b5d8d03397d3b5a.mockapi.io" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Countries Explorer",
+      "description": "Aplicación web para explorar información detallada sobre países de todo el mundo",
+      "url": "https://countries-explorer.app",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Countries Explorer Team"
+      },
+      "datePublished": "2024-01-01",
+      "inLanguage": "es",
+      "isAccessibleForFree": true,
+      "keywords": "países, geografía, población, capitales, monedas, banderas, datos demográficos",
+      "screenshot": "https://countries-explorer.app/assets/screenshot.jpg"
+    }
+    </script>
+    
+    <base href="/">
+  </head>
+  <body itemscope itemtype="https://schema.org/WebPage">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-blue-600 text-white p-2 z-50">
+      Saltar al contenido principal
+    </a>
+    
+    <app-root>
+      <div id="initial-loader" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #f9fafb; font-family: system-ui, -apple-system, sans-serif;">
+        <div style="text-align: center; max-width: 400px; padding: 2rem;">
+          <div style="width: 60px; height: 60px; border: 4px solid #e5e7eb; border-top: 4px solid #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;"></div>
+          <h1 style="color: #1f2937; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Countries Explorer</h1>
+          <p style="color: #6b7280; font-size: 1rem; margin-bottom: 1rem;">Cargando información de países...</p>
+          <p style="color: #9ca3af; font-size: 0.875rem; line-height: 1.4;">
+            Explora datos detallados sobre población, capitales, monedas y más de países de todo el mundo.
+          </p>
+        </div>
+      </div>
+      
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+        .focus\:not-sr-only:focus {
+          position: static;
+          width: auto;
+          height: auto;
+          padding: 0.5rem;
+          margin: 0;
+          overflow: visible;
+          clip: auto;
+          white-space: normal;
+        }
+      </style>
+    </app-root>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          const loader = document.getElementById('initial-loader');
+          if (loader && document.querySelector('app-root > *:not(#initial-loader)')) {
+            loader.style.display = 'none';
+          }
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
