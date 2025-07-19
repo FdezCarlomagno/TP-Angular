@@ -2,6 +2,21 @@
 
 Una aplicación web desarrollada en Angular que permite explorar información detallada de países de todo el mundo, con funcionalidades avanzadas de visualización de datos, sistema de favoritos y gráficos interactivos.
 
+# Links e información de la entrega
+Nombre: Valentín Fernández Carlomagno
+DNI: 46555388
+Email: valentinfcarlomagno@gmail.com
+Sede: Tandil
+
+Link a repositorio de Github:
+https://github.com/FdezCarlomagno/TP-Angular
+
+Link a proyecto en stackblitz:
+https://stackblitz.com/~/github.com/FdezCarlomagno/TP-Angular
+
+Link a proyecto stackblitz (editable):
+https://stackblitz.com/edit/github-whzitnrw
+
 ## 📋 Descripción del Proyecto
 
 Esta aplicación web utiliza el framework Angular para mostrar información completa de países de manera atractiva e interactiva. La aplicación integra múltiples APIs externas para proporcionar datos actualizados sobre población, capitales, monedas, banderas y más información relevante de cada país.
